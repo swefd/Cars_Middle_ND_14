@@ -31,10 +31,10 @@ void draw() {
 
 void keyPressed(){
   if(gb.getKey() == 4){
-    x--;
+    x = 2;
   }
   if(gb.getKey() == 5){
-    x++;
+    x = 5;
   }
  
 }
