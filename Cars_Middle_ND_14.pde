@@ -3,13 +3,17 @@ GameBoy gb = new GameBoy();
 int x=2;
 int y=0;
 
+int road_y = -3;
+
 Enemy currentEnemy;
+Enemy previousEnemy;
 
 void setup() {
   size(285, 565);
   gb.begin(0);
   
   currentEnemy = gb.createEnemy((int)random(1, 3));
+  previousEnemy = currentEnemy;
 }
 
 void draw() {
@@ -23,9 +27,27 @@ void draw() {
     gb.moveEnemies();
   }
   
+  if (frameCount % 5 == 0){
+    road_y++;
+    
+    if (road_y > 1){
+      road_y = -3;
+    }
+  }
+  
   if (currentEnemy.y  > 5){
+    previousEnemy = currentEnemy;
     currentEnemy = gb.createEnemy((int)random(1, 3));
   }
+  
+ if(previousEnemy.y + 3 > 11 && previousEnemy.x == x){
+   exit();
+ }
+ 
+ roadDraw(road_y);
+ roadDraw(road_y + 5);
+ roadDraw(road_y + 10);
+ roadDraw(road_y + 15);
   
 }
 
@@ -37,6 +59,19 @@ void keyPressed(){
     x = 5;
   }
  
+}
+
+
+void roadDraw(int y){
+  
+  gb.drawPoint(0, y);
+  gb.drawPoint(0, y + 1);
+  gb.drawPoint(0, y + 2);
+  
+  gb.drawPoint(7, y);
+  gb.drawPoint(7, y + 1);
+  gb.drawPoint(7, y + 2);
+  
 }
 
 
