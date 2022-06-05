@@ -1,7 +1,8 @@
-GameBoy gb = new GameBoy();
-
 int x=2;
 int y=0;
+
+int speed = 20;
+int score = 0;
 
 int road_y = -3;
 
@@ -23,7 +24,7 @@ void draw() {
   
   gb.displayEnemies();
   
-  if (frameCount % 20 == 0){
+  if (frameCount % speed == 0){
     gb.moveEnemies();
   }
   
@@ -31,16 +32,22 @@ void draw() {
     road_y++;
     
     if (road_y > 1){
-      road_y = -3;
+      road_y = -3;  
     }
   }
   
   if (currentEnemy.y  > 5){
     previousEnemy = currentEnemy;
     currentEnemy = gb.createEnemy((int)random(1, 3));
+    
+    score++;
+    if (speed > 1){ 
+      speed--;
+    }
   }
   
- if(previousEnemy.y + 3 > 11 && previousEnemy.x == x){
+ if(previousEnemy.y + 3 > 11 && previousEnemy.y < 15 && previousEnemy.x == x){
+   print("SCORE: " + score);
    exit();
  }
  
